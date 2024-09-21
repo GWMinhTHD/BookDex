@@ -80,7 +80,7 @@ const PaymentForm = () => {
         card: cardNumberElement,
       },
     }); */
-    const { error } = await stripe.confirmPayment({
+    const { paymentIntent, error } = await stripe.confirmPayment({
       elements,
       clientSecret: clientSecretResponse,
       confirmParams: {
@@ -93,12 +93,13 @@ const PaymentForm = () => {
       // This point is only reached if there's an immediate error when
       // confirming the payment. Show the error to your customer (for example, payment details incomplete)
       handleError(error);
-    } else {
+    } else if (paymentIntent && paymentIntent.status === "succeeded") {
+      console.log(paymentIntent.id);
       await axios
         .post(
           "https://localhost:7216/api/Payment/check-payment-confirm",
           {
-            Key: clientSecretResponse,
+            Key: paymentIntent.id,
           },
           { headers: { Authorization: `Bearer ${token}` } }
         )

@@ -13,6 +13,7 @@ import ProtectedRoute from "../Routes/ProtectedRoute";
 import BookDetails from "../pages/BookDetails/BookDetails";
 import CartPage from "../pages/CartPage/CartPage";
 import PaymentPage from "../pages/PaymentPage/PaymentPage";
+import ReaderPage from "../pages/ReaderPage/ReaderPage";
 
 function Body() {
   return (
@@ -30,6 +31,7 @@ function Body() {
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/library" element={<LibraryPage />} />
+          <Route path="/reader/:id" element={<ReaderPage />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

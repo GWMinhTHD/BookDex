@@ -22,7 +22,9 @@ function NavigationBar() {
                 <Nav.Link as={Link} to="/cart">
                   Cart
                 </Nav.Link>
-                <Nav.Link>Library</Nav.Link>
+                <Nav.Link as={Link} to="/library">
+                  Library
+                </Nav.Link>
               </Nav>
               <Nav>
                 <Navbar.Text className="ml-auto">

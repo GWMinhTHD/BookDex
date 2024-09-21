@@ -65,6 +65,24 @@ const getUserCart = async () => {
   });
 }
 
+const getUserLib = async () => {
+  const token = localStorage.getItem("token");
+  return await axiosClient.get(`api/Library`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+const getUserBook = async (id) => {
+  const token = localStorage.getItem("token");
+  try {
+    return await axiosClient.get(`api/Library/reader/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  } catch (error) {
+    handleError(error);
+  }
+};
+
 const BookStoreApi = {
   getAll,
   getById,
@@ -72,7 +90,9 @@ const BookStoreApi = {
   register,
   addCart,
   removeCart,
-  getUserCart
+  getUserCart,
+  getUserLib,
+  getUserBook,
 };
 
 export default BookStoreApi;

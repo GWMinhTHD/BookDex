@@ -50,5 +50,28 @@ namespace WebStore.Server.Controllers
             }
             return Ok(userLib);
         }
+
+        [HttpGet("reader/{id}")]
+        [Authorize]
+        public async Task<ActionResult<IEnumerable<Book>>> GetUserBook(int id)
+        {
+            var username = User.GetUserName();
+            var user = await _userManager.FindByNameAsync(username);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+            var checkLib = await _unitOfWork.Library.CheckOwnership(user, id);
+            if (checkLib == null)
+            {
+                return BadRequest("Book not exist or not owned");
+            }
+            var book = await _unitOfWork.Book.GetById(id);
+            var bookDto = new BookDTO();
+            bookDto.Id = book.Id;
+            bookDto.Name = book.Name;
+            bookDto.FileLocation = book.FileLocation;
+            return Ok(bookDto);
+        }
     }
 }
