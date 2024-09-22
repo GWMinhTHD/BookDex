@@ -27,11 +27,11 @@ const login = async (email, password) => {
   }
 };
 
-const register = async (email, userName, password) => {
+const register = async (email, username, password) => {
   try {
     const data = axiosClient.post(`api/auth/register`, {
       email: email,
-      userName: userName,
+      name: username,
       password: password,
     });
     return data;

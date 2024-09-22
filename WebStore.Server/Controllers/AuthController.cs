@@ -33,7 +33,8 @@ namespace WebStore.Server.Controllers
                     }
                     var user = new ApplicationUser
                     {
-                        UserName = dto.UserName,
+                        Name = dto.Name,
+                        UserName = dto.Email,
                         Email = dto.Email
                     };
                     var createUser = await _userManager.CreateAsync(user, dto.Password);
@@ -44,7 +45,7 @@ namespace WebStore.Server.Controllers
                         {
                             var newUser = new UserAuthResDTO
                             {
-                                UserName = user.UserName,
+                                Name = user.Name,
                                 Email = user.Email,
                                 Token = _tokenService.CreateToken(user)
                             };
@@ -83,9 +84,9 @@ namespace WebStore.Server.Controllers
                 }
                 var userLogin = new UserAuthResDTO
                 {
-                UserName = user.UserName,
-                Email = user.Email,
-                Token = _tokenService.CreateToken(user)
+                    Name = user.Name,
+                    Email = user.Email,
+                    Token = _tokenService.CreateToken(user)
                 };
             return Ok(userLogin);
             }

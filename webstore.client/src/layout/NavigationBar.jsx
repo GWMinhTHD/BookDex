@@ -28,7 +28,7 @@ function NavigationBar() {
               </Nav>
               <Nav>
                 <Navbar.Text className="ml-auto">
-                  Welcome, {user?.userName} {"  "}
+                  Welcome, {user?.name} {"  "}
                 </Navbar.Text>
                 <Button variant="danger" onClick={logout} className="ml-auto">
                   Logout

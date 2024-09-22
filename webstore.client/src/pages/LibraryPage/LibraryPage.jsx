@@ -34,14 +34,18 @@ function LibraryPage() {
                     {book.authors.join(", ")}
                   </p>
                   <div className="flex flex-col space-y-2">
-                    <Link to={`/reader/${book.id}`} >
-                      <button className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out">
-                        Read Now
-                      </button>
+                    <Link
+                      to={`/reader/${book.id}`}
+                      className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out text-center"
+                    >
+                      Read Now
                     </Link>
-                    <button className="bg-gray-200 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-300 transition duration-300 ease-in-out">
+                    <Link
+                      to={`/`}
+                      className="bg-gray-200 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-300 transition duration-300 ease-in-out text-center"
+                    >
                       More Details
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

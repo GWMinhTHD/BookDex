@@ -29,7 +29,7 @@ export const UserProvider = ({ children }) => {
         if (res) {
           localStorage.setItem("token", res.data.token);
           const userObj = {
-            userName: res?.data.userName,
+            name: res?.data.name,
             email: res?.data.email,
           };
           localStorage.setItem("user", JSON.stringify(userObj));
@@ -48,7 +48,7 @@ export const UserProvider = ({ children }) => {
         if (res) {
           localStorage.setItem("token", res?.data.token);
           const userObj = {
-            userName: res.data.userName,
+            name: res.data.name,
             email: res.data.email,
           };
           localStorage.setItem("user", JSON.stringify(userObj));
