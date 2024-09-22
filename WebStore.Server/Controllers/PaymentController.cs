@@ -40,7 +40,7 @@ namespace WebStore.Server.Controllers
             }
             total = total * 100;
             long amount = Convert.ToInt64(total);
-            var paymentIntent = _paymentService.CreatePaymentIntent(amount, request.Currency);
+            var paymentIntent = _paymentService.CreatePaymentIntent(amount, request.Currency, request.PaymentMethodTypes);
             return Ok(new { clientSecret = paymentIntent.ClientSecret });
         }
 

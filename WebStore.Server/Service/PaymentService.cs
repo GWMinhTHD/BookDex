@@ -10,16 +10,13 @@ namespace WebStore.Server.Service
             StripeConfiguration.ApiKey = "sk_test_51Q0egCAafQlHWfVLnffZpe7VTHdxYfqAuCuSQEXdJrgd8UlQtfM770gupmX0gj1Z6R6pk4uwQaOW6N8V8HJcvOvo00L4PdDBPg";
         }
 
-        public PaymentIntent CreatePaymentIntent(long amount, string currency)
+        public PaymentIntent CreatePaymentIntent(long amount, string currency, List<string> paymentMethodTypes)
         {
             var options = new PaymentIntentCreateOptions
             {
                 Amount = amount,
                 Currency = currency,
-                AutomaticPaymentMethods = new PaymentIntentAutomaticPaymentMethodsOptions
-                {
-                    Enabled = true,
-                },
+                PaymentMethodTypes = paymentMethodTypes,
             };
             var service = new PaymentIntentService();
             return service.Create(options);

@@ -59,35 +59,33 @@ const PaymentForm = () => {
       return;
     }
 
-    const res = await axios
-      .post(
-        "https://localhost:7216/api/Payment/create-payment-intent",
-        {
-          currency: "usd", // Currency type
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
+    const res = await axios.post(
+      "https://localhost:7216/api/Payment/create-payment-intent",
+      {
+        currency: "usd", // Currency type
+        paymentMethodTypes: ["card"],
+      },
+      { headers: { Authorization: `Bearer ${token}` } }
     );
 
-    console.log(res);
 
-    /* const cardNumberElement = elements.getElement(CardNumberElement); */
+    const cardNumberElement = elements.getElement(CardNumberElement);
 
     const clientSecretResponse = res.data.clientSecret;
-    console.log("Client Secret from response:", clientSecretResponse);
 
-/*     const { error } = await stripe.confirmCardPayment(clientSecret, {
+     const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecretResponse, {
       payment_method: {
         card: cardNumberElement,
       },
-    }); */
-    const { paymentIntent, error } = await stripe.confirmPayment({
+    });
+    /* const { paymentIntent, error } = await stripe.confirmPayment({
       elements,
       clientSecret: clientSecretResponse,
       confirmParams: {
         return_url: "https://example.com/order/123/complete",
       },
       redirect: "if_required",
-    });
+    }); */
 
     if (error) {
       // This point is only reached if there's an immediate error when
@@ -110,13 +108,72 @@ const PaymentForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <PaymentElement />
-      <button type="submit" disabled={!stripe || loading}>
-        Submit Payment
-      </button>
-      {errorMessage && <div>{errorMessage}</div>}
-    </form>
+    <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <h1 className="text-center text-3xl font-extrabold text-gray-900 mb-6">
+          Checkout
+        </h1>
+      </div>
+
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h2 className="text-xl font-semibold mb-4">Payment Details</h2>
+            <div className="space-y-4">
+              <div>
+                <label
+                  htmlFor="card-number"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
+                  Card Number
+                </label>
+                <div className="border border-gray-300 rounded-md p-3 bg-white">
+                  <CardNumberElement
+                    id="card-number"
+                    options={elementOptions}
+                  />
+                </div>
+              </div>
+              <div className="flex space-x-4">
+                <div className="flex-1">
+                  <label
+                    htmlFor="card-expiry"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Expiration Date
+                  </label>
+                  <div className="border border-gray-300 rounded-md p-3 bg-white">
+                    <CardExpiryElement
+                      id="card-expiry"
+                      options={elementOptions}
+                    />
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <label
+                    htmlFor="card-cvc"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    CVC
+                  </label>
+                  <div className="border border-gray-300 rounded-md p-3 bg-white">
+                    <CardCvcElement id="card-cvc" options={elementOptions} />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button
+              type="submit"
+              disabled={!stripe || loading}
+              className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md transition duration-300 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Pay
+            </button>
+            {errorMessage && <div>{errorMessage}</div>}
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 
