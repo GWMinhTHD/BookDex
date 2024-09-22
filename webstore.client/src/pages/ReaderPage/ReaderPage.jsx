@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 
 function ReaderPage() {
   const [book, setBook] = useState(null);
+  const [initialPage, setInitialPage]= useState(0)
   const { id } = useParams();
 
 const toolbarPluginInstance = toolbarPlugin();
@@ -33,11 +34,16 @@ const transform = (slot) => ({
   SwitchViewModeMenuItem: () => <></>,
   //SwitchSelectionMode: () => <></>,
   //SwitchSelectionModeMenuItem: () => <></>,
-});
+  });
+
+  const handlePageChange = (e) => {
+    BookStoreApi.updatePage(book.bookId, e.currentPage);
+  };
 
   useEffect(() => {
     BookStoreApi.getUserBook(id).then((item) => {
       setBook(item.data);
+      setInitialPage(item.data.pageNum);
     });
   }, []);
 
@@ -61,6 +67,8 @@ const transform = (slot) => ({
                 </div>
                 <Viewer
                   fileUrl={`https://localhost:7216/pdf/${book.fileLocation}`}
+                  initialPage={initialPage}
+                  onPageChange={handlePageChange}
                   plugins={[toolbarPluginInstance]}
                   defaultScale={1.0}
                   renderLoader={(percentages) => (

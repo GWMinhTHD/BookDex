@@ -7,5 +7,6 @@ namespace WebStore.Server.Interfaces
         Task<List<Book>> GetUserBooks(ApplicationUser user);
         Task<Library> CheckOwnership(ApplicationUser user, int id);
         Task Insert(string cusId, int bookId);
+        void Update(Library library);
     }
 }

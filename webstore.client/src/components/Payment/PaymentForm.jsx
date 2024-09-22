@@ -2,7 +2,6 @@ import {
   CardCvcElement,
   CardExpiryElement,
   CardNumberElement,
-  PaymentElement,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
@@ -16,7 +15,6 @@ const PaymentForm = () => {
   const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
-/*   const [clientSecret, setClientSecret] = useState(""); */
   const [errorMessage, setErrorMessage] = useState();
   const [loading, setLoading] = useState(false);
   const elementOptions = {
@@ -68,16 +66,15 @@ const PaymentForm = () => {
       { headers: { Authorization: `Bearer ${token}` } }
     );
 
-
     const cardNumberElement = elements.getElement(CardNumberElement);
-
     const clientSecretResponse = res.data.clientSecret;
 
      const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecretResponse, {
       payment_method: {
         card: cardNumberElement,
       },
-    });
+     });
+
     /* const { paymentIntent, error } = await stripe.confirmPayment({
       elements,
       clientSecret: clientSecretResponse,

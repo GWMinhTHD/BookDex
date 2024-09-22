@@ -83,6 +83,21 @@ const getUserBook = async (id) => {
   }
 };
 
+const updatePage = async (id, page) => {
+  const token = localStorage.getItem("token");
+  try {
+    return await axiosClient.patch(`api/Library`,
+    {
+      bookId: id,
+      pageNum: page
+    }, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  } catch (error) {
+    handleError(error);
+  }
+}
+
 const BookStoreApi = {
   getAll,
   getById,
@@ -93,6 +108,7 @@ const BookStoreApi = {
   getUserCart,
   getUserLib,
   getUserBook,
+  updatePage,
 };
 
 export default BookStoreApi;

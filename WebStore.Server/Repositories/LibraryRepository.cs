@@ -40,5 +40,10 @@ namespace WebStore.Server.Repositories
             lib.BookId = bookId;
             await _context.Library.AddAsync(lib);
         }
+
+        public void Update(Library library)
+        {
+            _context.Library.Update(library);
+        }
     }
 }

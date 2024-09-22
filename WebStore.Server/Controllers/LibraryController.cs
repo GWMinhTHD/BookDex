@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using WebStore.Server.Extensions;
 using WebStore.Server.Interfaces;
 using WebStore.Server.Models;
-using static System.Reflection.Metadata.BlobBuilder;
 using WebStore.Server.Models.DTOs;
 
 namespace WebStore.Server.Controllers
@@ -67,11 +66,33 @@ namespace WebStore.Server.Controllers
                 return BadRequest("Book not exist or not owned");
             }
             var book = await _unitOfWork.Book.GetById(id);
-            var bookDto = new BookDTO();
-            bookDto.Id = book.Id;
-            bookDto.Name = book.Name;
-            bookDto.FileLocation = book.FileLocation;
-            return Ok(bookDto);
+            var dto = new ReadProgressDTO();
+            dto.BookId = book.Id;
+            dto.Name = book.Name;
+            dto.FileLocation = book.FileLocation;
+            dto.PageNum = checkLib.CurrentPage;
+            return Ok(dto);
+        }
+
+        [HttpPatch]
+        [Authorize]
+        public async Task<ActionResult> UpdateReadProgress(UpdateProgressDTO dto)
+        {
+            var username = User.GetUserName();
+            var user = await _userManager.FindByNameAsync(username);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+            var checkLib = await _unitOfWork.Library.CheckOwnership(user, dto.BookId);
+            if (checkLib == null)
+            {
+                return BadRequest("Book not exist or not owned");
+            }
+            checkLib.CurrentPage = dto.PageNum;
+            _unitOfWork.Library.Update(checkLib);
+            await _unitOfWork.Save();
+            return Ok();
         }
     }
 }
