@@ -40,27 +40,8 @@ namespace WebStore.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(Author author, IFormFile? file)
+        public async Task<ActionResult> Create(Author author)
         {
-                string wwwRootPath = _webHost.WebRootPath;
-                if (file != null)
-                {
-                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    string authorPath = Path.Combine(wwwRootPath, "img\\authorcover");
-                    if (!string.IsNullOrEmpty(author.Photo))
-                    {
-                        var oldImagePath = Path.Combine(wwwRootPath, author.Photo.TrimStart('\\'));
-                        if (System.IO.File.Exists(oldImagePath))
-                        {
-                            System.IO.File.Delete(oldImagePath);
-                        }
-                    }
-                    using (var fileStream = new FileStream(Path.Combine(authorPath, fileName), FileMode.Create))
-                    {
-                        file.CopyTo(fileStream);
-                    }
-                    author.Photo = @"\img\authorcover\" + fileName;
-                }
                 await _unitOfWork.Author.Insert(author);
                 await _unitOfWork.Save();
             
@@ -68,7 +49,7 @@ namespace WebStore.Server.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int? id, Author author, IFormFile? file)
+        public async Task<ActionResult> Update(int? id, Author author)
         {
             if (id != author.Id)
             {
@@ -79,24 +60,6 @@ namespace WebStore.Server.Controllers
                 return NotFound();
             }
             string wwwRootPath = _webHost.WebRootPath;
-            if (file != null)
-            {
-                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                string authorPath = Path.Combine(wwwRootPath, "img\\authorcover");
-                if (!string.IsNullOrEmpty(author.Photo))
-                {
-                    var oldImagePath = Path.Combine(wwwRootPath, author.Photo.TrimStart('\\'));
-                    if (System.IO.File.Exists(oldImagePath))
-                    {
-                        System.IO.File.Delete(oldImagePath);
-                    }
-                }
-                using (var fileStream = new FileStream(Path.Combine(authorPath, fileName), FileMode.Create))
-                {
-                    file.CopyTo(fileStream);
-                }
-                author.Photo = @"\img\authorcover\" + fileName;
-            }
             _unitOfWork.Author.Update(author);
             await _unitOfWork.Save();
             return Ok();
@@ -114,15 +77,6 @@ namespace WebStore.Server.Controllers
             if (author == null)
             {
                 return NotFound();
-            }
-            if (!string.IsNullOrEmpty(author.Photo))
-            {
-                string wwwRootPath = _webHost.WebRootPath;
-                var oldImagePath = Path.Combine(wwwRootPath, author.Photo.TrimStart('\\'));
-                if (System.IO.File.Exists(oldImagePath))
-                {
-                    System.IO.File.Delete(oldImagePath);
-                }
             }
             _unitOfWork.Author.Delete(author);
             await _unitOfWork.Save();

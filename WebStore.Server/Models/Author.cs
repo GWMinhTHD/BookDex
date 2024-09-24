@@ -9,7 +9,6 @@ namespace WebStore.Server.Models
         public int Id { get; set; }
         [Required]
         public string Alias { get; set; }
-        public string? Photo { get; set; }
         public string Info { get; set; }
         [ValidateNever]
         public List<BookAuthor> BookAuthors { get; set; }
