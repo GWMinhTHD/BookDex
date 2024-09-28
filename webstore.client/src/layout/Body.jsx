@@ -14,6 +14,8 @@ import BookDetails from "../pages/BookDetails/BookDetails";
 import CartPage from "../pages/CartPage/CartPage";
 import PaymentPage from "../pages/PaymentPage/PaymentPage";
 import ReaderPage from "../pages/ReaderPage/ReaderPage";
+import OrderPage from "../pages/OrderPage/OrderPage";
+import OrderDetails from "../pages/OrderDetails/OrderDetails";
 
 function Body() {
   return (
@@ -32,6 +34,8 @@ function Body() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/library" element={<LibraryPage />} />
           <Route path="/reader/:id" element={<ReaderPage />} />
+          <Route path="/order" element={<OrderPage />} />
+          <Route path="/order/:id" element={<OrderDetails />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebStore.Server.Interfaces;
 using WebStore.Server.Models;
+using WebStore.Server.Models.DTOs;
 
 namespace WebStore.Server.Controllers
 {
@@ -17,10 +18,18 @@ namespace WebStore.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Category>>> GetAll()
+        public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetAll()
         {
-            var authors = await _unitOfWork.Category.GetAll();
-            return Ok(authors);
+            var categories = await _unitOfWork.Category.GetAll();
+            List<CategoryDTO> result = new List<CategoryDTO>();
+            foreach (var category in categories)
+            {
+                var cateDTO = new CategoryDTO();
+                cateDTO.Id = category.Id;
+                cateDTO.Name = category.Name;
+                result.Add(cateDTO);
+            }
+            return Ok(result);
         }
 
         [HttpGet("{id}")]

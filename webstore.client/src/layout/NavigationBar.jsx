@@ -25,6 +25,9 @@ function NavigationBar() {
                 <Nav.Link as={Link} to="/library">
                   Library
                 </Nav.Link>
+                <Nav.Link as={Link} to="/order">
+                  Order
+                </Nav.Link>
               </Nav>
               <Nav>
                 <Navbar.Text className="ml-auto">

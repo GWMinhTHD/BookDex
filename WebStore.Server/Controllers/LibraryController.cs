@@ -23,7 +23,7 @@ namespace WebStore.Server.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<Book>>> Get()
+        public async Task<ActionResult<IEnumerable<BookDTO>>> Get()
         {
             var username = User.GetUserName();
             var user = await _userManager.FindByNameAsync(username);
@@ -52,7 +52,7 @@ namespace WebStore.Server.Controllers
 
         [HttpGet("reader/{id}")]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<Book>>> GetUserBook(int id)
+        public async Task<ActionResult<BookDTO>> GetUserBook(int id)
         {
             var username = User.GetUserName();
             var user = await _userManager.FindByNameAsync(username);

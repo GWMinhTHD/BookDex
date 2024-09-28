@@ -6,10 +6,10 @@ namespace WebStore.Server.Interfaces
     {
         void CreateOrder (Order order);
         void Update(Order order);
-        List<Order> GetOfUser(string currentUser);
+        Task<IEnumerable<Order>> GetOfUser(ApplicationUser user);
+        Task<Order> CheckOwnership(ApplicationUser user, int id);
         //List<Order> GetAll();
-        Order GetById(int? id);
-
+        Task<IEnumerable<OrderBook>> GetById(int? id);
 
     }
 }

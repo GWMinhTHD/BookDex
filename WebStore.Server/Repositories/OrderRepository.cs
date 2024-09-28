@@ -12,6 +12,12 @@ namespace WebStore.Server.Repositories
         {
             _context = context;
         }
+
+        public async Task<Order> CheckOwnership(ApplicationUser user, int id)
+        {
+            return await _context.Order.FirstOrDefaultAsync(c => c.UserId == user.Id && c.Id == id);
+        }
+
         public void CreateOrder(Order order)
         {
             _context.Order.Add(order);
@@ -22,14 +28,14 @@ namespace WebStore.Server.Repositories
             return _context.Order.ToList();
         }
 
-        public Order GetById(int? id)
+        public async Task<IEnumerable<OrderBook>> GetById(int? id)
         {
-            return _context.Order.Include("OrderBooks").Include("User").FirstOrDefault(o => o.Id == id);
+            return await _context.OrderBook.Where(o => o.OrderId == id).ToListAsync();
         }
 
-        public List<Order> GetOfUser(string currentUserID)
+        public async Task<IEnumerable<Order>> GetOfUser(ApplicationUser user)
         {
-            return _context.Order.Where(o => o.UserId == currentUserID).ToList();
+            return await _context.Order.Where(o => o.UserId == user.Id).ToListAsync();
         }
 
         public void Update(Order order)

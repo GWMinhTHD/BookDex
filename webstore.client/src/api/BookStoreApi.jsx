@@ -98,6 +98,20 @@ const updatePage = async (id, page) => {
   }
 }
 
+const getUserOrder = async () => {
+  const token = localStorage.getItem("token");
+  return await axiosClient.get(`api/Order`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+const getOrderDetail = async (id) => {
+  const token = localStorage.getItem("token");
+  return await axiosClient.get(`api/Order/${id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
 const BookStoreApi = {
   getAll,
   getById,
@@ -109,6 +123,8 @@ const BookStoreApi = {
   getUserLib,
   getUserBook,
   updatePage,
+  getUserOrder,
+  getOrderDetail
 };
 
 export default BookStoreApi;
