@@ -51,19 +51,19 @@ namespace WebStore.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "86a52332-5e89-4671-aadf-e0d039391004",
+                            Id = "5c0f1b03-426d-49d0-98e3-d82d7c325dc7",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "d94cbf1a-33fa-4e95-ae11-52c6ccaa9e24",
+                            Id = "5e45d2fe-8819-4597-bbc4-5303982810b3",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "9c74be8b-a226-4f1e-b37f-e2b4daec7aad",
+                            Id = "f9e5c01b-36a7-4f61-9273-bff679ed4135",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         });
@@ -273,15 +273,15 @@ namespace WebStore.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Cover")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Cover")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FileLocation")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("FileLocation")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()

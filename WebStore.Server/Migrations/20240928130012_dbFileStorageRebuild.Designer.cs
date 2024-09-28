@@ -12,8 +12,8 @@ using WebStore.Server.Data;
 namespace WebStore.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240914062430_seedRoles")]
-    partial class seedRoles
+    [Migration("20240928130012_dbFileStorageRebuild")]
+    partial class dbFileStorageRebuild
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,19 +54,19 @@ namespace WebStore.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1c9d997a-3ae0-4d95-b236-9a0fcd03e87a",
+                            Id = "5c0f1b03-426d-49d0-98e3-d82d7c325dc7",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "97090244-ab56-4155-9d78-3912a729152a",
+                            Id = "5e45d2fe-8819-4597-bbc4-5303982810b3",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "e8ec3501-ead0-457c-ad04-9358f7f43106",
+                            Id = "f9e5c01b-36a7-4f61-9273-bff679ed4135",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         });
@@ -203,6 +203,10 @@ namespace WebStore.Server.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -259,9 +263,6 @@ namespace WebStore.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Photo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Author");
@@ -275,15 +276,15 @@ namespace WebStore.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Cover")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Cover")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FileLocation")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("FileLocation")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -327,6 +328,31 @@ namespace WebStore.Server.Migrations
                     b.ToTable("BookCategory");
                 });
 
+            modelBuilder.Entity("WebStore.Server.Models.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("BookID")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Cart");
+                });
+
             modelBuilder.Entity("WebStore.Server.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -356,11 +382,58 @@ namespace WebStore.Server.Migrations
                     b.Property<string>("CusId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("CurrentPage")
+                        .HasColumnType("int");
+
                     b.HasKey("BookId", "CusId");
 
                     b.HasIndex("CusId");
 
                     b.ToTable("Library");
+                });
+
+            modelBuilder.Entity("WebStore.Server.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("WebStore.Server.Models.OrderBook", b =>
+                {
+                    b.Property<int?>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BookName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("BookPrice")
+                        .HasColumnType("real");
+
+                    b.HasKey("BookId", "OrderId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderBook");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -452,6 +525,25 @@ namespace WebStore.Server.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("WebStore.Server.Models.Cart", b =>
+                {
+                    b.HasOne("WebStore.Server.Models.Book", "Book")
+                        .WithMany()
+                        .HasForeignKey("BookID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebStore.Server.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("WebStore.Server.Models.Library", b =>
                 {
                     b.HasOne("WebStore.Server.Models.Book", "Book")
@@ -469,6 +561,28 @@ namespace WebStore.Server.Migrations
                     b.Navigation("Book");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WebStore.Server.Models.Order", b =>
+                {
+                    b.HasOne("WebStore.Server.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WebStore.Server.Models.OrderBook", b =>
+                {
+                    b.HasOne("WebStore.Server.Models.Order", "Order")
+                        .WithMany("OrderBooks")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("WebStore.Server.Models.ApplicationUser", b =>
@@ -493,6 +607,11 @@ namespace WebStore.Server.Migrations
             modelBuilder.Entity("WebStore.Server.Models.Category", b =>
                 {
                     b.Navigation("BookCategories");
+                });
+
+            modelBuilder.Entity("WebStore.Server.Models.Order", b =>
+                {
+                    b.Navigation("OrderBooks");
                 });
 #pragma warning restore 612, 618
         }

@@ -34,11 +34,19 @@ function CartPage() {
               {cart.length > 0 &&
                 cart.map((item) => (
                   <div key={item.id} className="flex items-center space-x-6">
-                    <img
-                      src={`https://localhost:7216/img/bookcover/${item.bookCover}`}
-                      alt={`Cover of ${item.bookName}`}
-                      className="w-24 h-36 object-cover rounded-md shadow-md"
-                    />
+                    {item.bookCover ? (
+                      <img
+                        src={`data:image/png;base64,${item.bookCover}`}
+                        alt={`Cover of ${item.bookName}`}
+                        className="w-24 h-36 object-cover rounded-md shadow-md"
+                      />
+                    ) : (
+                      <img
+                        src={`https://localhost:7216/img/bookcover/placeholder.jpg`}
+                        alt={`Cover of ${item.bookName}`}
+                        className="w-24 h-36 object-cover rounded-md shadow-md"
+                      />
+                    )}
                     <div className="flex-grow">
                       <h2 className="text-xl font-semibold text-gray-800">
                         {item.bookName}
@@ -66,8 +74,7 @@ function CartPage() {
         <div className="max-w-3xl mx-auto">
           {total ? (
             <p className="text-2xl font-bold mb-4 text-center">
-              Total:{" "}
-              <span className="text-green-600">${total.toFixed(2)}</span>
+              Total: <span className="text-green-600">${total.toFixed(2)}</span>
             </p>
           ) : (
             <p className="text-2xl font-bold mb-4 text-center">No Item</p>

@@ -5,7 +5,7 @@
         public int BookId { get; set; }
         public string Name { get; set; }
 
-        public string FileLocation { get; set; }
+        public byte[]? FileLocation { get; set; }
         public int PageNum { get; set; } = 1;
     }
 }

@@ -10,12 +10,10 @@ namespace WebStore.Server.Controllers
     public class BookController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IWebHostEnvironment _webHost;
 
-        public BookController(IUnitOfWork unitOfWork, IWebHostEnvironment webhost)
+        public BookController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _webHost = webhost;
         }
 
         [HttpGet]
@@ -31,7 +29,7 @@ namespace WebStore.Server.Controllers
                 bookDTO.Cover = book.Cover;
                 bookDTO.Description = book.Description;
                 bookDTO.Price = book.Price;
-                bookDTO.FileLocation = book.FileLocation;
+                //bookDTO.FileLocation = book.FileLocation;
                 foreach (var category in book.BookCategories)
                 {
                     bookDTO.CategoryIDs.Add(category.Category.Id);
@@ -79,95 +77,6 @@ namespace WebStore.Server.Controllers
             return Ok(bookDTO);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Create(Book book, IFormFile? file)
-        {
-            string wwwRootPath = _webHost.WebRootPath;
-            if (file != null)
-            {
-                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                string bookPath = Path.Combine(wwwRootPath, "img\\bookcover");
-                if (!string.IsNullOrEmpty(book.Cover))
-                {
-                    var oldImagePath = Path.Combine(wwwRootPath, book.Cover.TrimStart('\\'));
-                    if (System.IO.File.Exists(oldImagePath))
-                    {
-                        System.IO.File.Delete(oldImagePath);
-                    }
-                }
-                using (var fileStream = new FileStream(Path.Combine(bookPath, fileName), FileMode.Create))
-                {
-                    file.CopyTo(fileStream);
-                }
-                book.Cover = @"\img\bookcover\" + fileName;
-            }
-
-            await _unitOfWork.Book.Insert(book);
-            await _unitOfWork.Save();
-            return Ok();
-        }
-
-        [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int? id, Book book, IFormFile? file)
-        {
-            if (id != book.Id)
-            {
-                return BadRequest();
-            }
-            if (_unitOfWork.Author.GetById(id) == null)
-            {
-                return NotFound();
-            }
-            string wwwRootPath = _webHost.WebRootPath;
-            if (file != null)
-            {
-                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                string bookPath = Path.Combine(wwwRootPath, "img\\bookcover");
-                if (!string.IsNullOrEmpty(book.Cover))
-                {
-                    var oldImagePath = Path.Combine(wwwRootPath, book.Cover.TrimStart('\\'));
-                    if (System.IO.File.Exists(oldImagePath))
-                    {
-                        System.IO.File.Delete(oldImagePath);
-                    }
-                }
-                using (var fileStream = new FileStream(Path.Combine(bookPath, fileName), FileMode.Create))
-                {
-                    file.CopyTo(fileStream);
-                }
-                book.Cover = @"\img\bookcover\" + fileName;
-            }
-            _unitOfWork.Book.Update(book);
-            await _unitOfWork.Save();
-            return Ok();
-
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == 0 || id == null)
-            {
-                return NotFound();
-            }
-            Book book = await _unitOfWork.Book.GetById(id);
-            if (book == null)
-            {
-                return NotFound();
-            }
-            if (!string.IsNullOrEmpty(book.Cover))
-            {
-                string wwwRootPath = _webHost.WebRootPath;
-                var oldImagePath = Path.Combine(wwwRootPath, book.Cover.TrimStart('\\'));
-                if (System.IO.File.Exists(oldImagePath))
-                {
-                    System.IO.File.Delete(oldImagePath);
-                }
-            }
-            _unitOfWork.Book.Delete(book);
-            await _unitOfWork.Save();
-            return Ok();
-        }
     }
 }
 

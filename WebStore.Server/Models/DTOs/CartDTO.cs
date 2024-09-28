@@ -9,7 +9,7 @@ namespace WebStore.Server.Models.DTOs
         public int Id { get; set; }
         public string BookName { get; set; }
         public double BookPrice { get; set; }
-        public string BookCover { get; set; }
+        public byte[]? BookCover { get; set; }
         public List<string> BookAuthors { get; set; } = new List<string>();
     }
 }

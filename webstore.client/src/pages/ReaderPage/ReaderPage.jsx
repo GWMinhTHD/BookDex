@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 
 function ReaderPage() {
   const [book, setBook] = useState(null);
+  const [url, setURL] = useState();
   const [initialPage, setInitialPage]= useState(0)
   const { id } = useParams();
 
@@ -44,8 +45,23 @@ const transform = (slot) => ({
     BookStoreApi.getUserBook(id).then((item) => {
       setBook(item.data);
       setInitialPage(item.data.pageNum);
+      const blob = base64toBlob(item.data.fileLocation);
+      setURL(URL.createObjectURL(blob));
     });
   }, []);
+
+  const base64toBlob = (data) => {
+    const bytes = atob(data);
+    let length = bytes.length;
+    let out = new Uint8Array(length);
+
+    while (length--) {
+        out[length] = bytes.charCodeAt(length);
+    }
+
+    return new Blob([out], { type: 'application/pdf' });
+};
+
 
   return (
     <>
@@ -66,7 +82,7 @@ const transform = (slot) => ({
                   <Toolbar>{renderDefaultToolbar(transform)}</Toolbar>
                 </div>
                 <Viewer
-                  fileUrl={`https://localhost:7216/pdf/${book.fileLocation}`}
+                  fileUrl={url}
                   initialPage={initialPage}
                   onPageChange={handlePageChange}
                   plugins={[toolbarPluginInstance]}

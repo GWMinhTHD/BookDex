@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace WebStore.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class dbFileStorageRebuild : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -58,7 +60,6 @@ namespace WebStore.Server.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Alias = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Photo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Info = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -73,9 +74,9 @@ namespace WebStore.Server.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Cover = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Cover = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FileLocation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FileLocation = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     Price = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
@@ -204,6 +205,26 @@ namespace WebStore.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Order",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Total = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Order", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Order_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BookAuthor",
                 columns: table => new
                 {
@@ -228,11 +249,38 @@ namespace WebStore.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Cart",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    BookID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cart", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cart_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Cart_Book_BookID",
+                        column: x => x.BookID,
+                        principalTable: "Book",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Library",
                 columns: table => new
                 {
                     CusId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    BookId = table.Column<int>(type: "int", nullable: false)
+                    BookId = table.Column<int>(type: "int", nullable: false),
+                    CurrentPage = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -273,6 +321,36 @@ namespace WebStore.Server.Migrations
                         principalTable: "Category",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderBook",
+                columns: table => new
+                {
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    BookId = table.Column<int>(type: "int", nullable: false),
+                    BookName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BookPrice = table.Column<float>(type: "real", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderBook", x => new { x.BookId, x.OrderId });
+                    table.ForeignKey(
+                        name: "FK_OrderBook_Order_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Order",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "5c0f1b03-426d-49d0-98e3-d82d7c325dc7", null, "Admin", "ADMIN" },
+                    { "5e45d2fe-8819-4597-bbc4-5303982810b3", null, "Customer", "CUSTOMER" },
+                    { "f9e5c01b-36a7-4f61-9273-bff679ed4135", null, "Manager", "MANAGER" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -325,9 +403,29 @@ namespace WebStore.Server.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Cart_BookID",
+                table: "Cart",
+                column: "BookID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cart_UserID",
+                table: "Cart",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Library_CusId",
                 table: "Library",
                 column: "CusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Order_UserId",
+                table: "Order",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderBook_OrderId",
+                table: "OrderBook",
+                column: "OrderId");
         }
 
         /// <inheritdoc />
@@ -355,7 +453,13 @@ namespace WebStore.Server.Migrations
                 name: "BookCategory");
 
             migrationBuilder.DropTable(
+                name: "Cart");
+
+            migrationBuilder.DropTable(
                 name: "Library");
+
+            migrationBuilder.DropTable(
+                name: "OrderBook");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -367,10 +471,13 @@ namespace WebStore.Server.Migrations
                 name: "Category");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Book");
 
             migrationBuilder.DropTable(
-                name: "Book");
+                name: "Order");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

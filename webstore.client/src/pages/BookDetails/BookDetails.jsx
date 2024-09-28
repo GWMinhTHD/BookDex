@@ -35,11 +35,19 @@ function BookDetails() {
           </div>
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div className="space-y-4">
-              <img
-                src={`https://localhost:7216/img/bookcover/${book.cover}`}
-                alt={`Cover of ${book.name}`}
-                className="w-full max-w-md mx-auto rounded-lg shadow-lg"
-              />
+              {book.cover ? (
+                <img
+                  src={`data:image/png;base64,${book.cover}`}
+                  alt={book.name}
+                  className="w-full max-w-md mx-auto rounded-lg shadow-lg"
+                />
+              ) : (
+                <img
+                  src={`https://localhost:7216/img/bookcover/placeholder.jpg`}
+                  alt={book.name}
+                  className="w-full max-w-md mx-auto rounded-lg shadow-lg"
+                />
+              )}
             </div>
             <div className="space-y-4">
               <h1 className="text-3xl font-bold text-gray-800">{book.name}</h1>

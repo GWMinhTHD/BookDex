@@ -7,8 +7,8 @@ namespace WebStore.Server.Models.DTOs
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string? Cover { get; set; }
-        public string FileLocation { get; set; }
+        public byte[]? Cover { get; set; }
+        public byte[]? FileLocation { get; set; }
         public string Description { get; set; }
         public float Price { get; set; }
         public List<int> CategoryIDs { get; set; } = new List<int>();

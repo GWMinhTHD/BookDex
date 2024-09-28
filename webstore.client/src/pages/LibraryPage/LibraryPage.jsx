@@ -107,11 +107,19 @@ function LibraryPage() {
               className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col"
             >
               <div className="h-80 p-4 bg-gray-100">
-                <img
-                  src={`https://localhost:7216/img/bookcover/${book.cover}`}
-                  alt={book.name}
-                  className="w-full h-full object-contain"
-                />
+                {book.cover ? (
+                  <img
+                    src={`data:image/png;base64,${book.cover}`}
+                    alt={book.name}
+                    className="w-full h-full object-contain"
+                  />
+                ) : (
+                  <img
+                    src={`https://localhost:7216/img/bookcover/placeholder.jpg`}
+                    alt={book.name}
+                    className="w-full h-full object-contain"
+                  />
+                )}
               </div>
               <div className="p-4 flex-grow flex flex-col justify-between">
                 <div>
