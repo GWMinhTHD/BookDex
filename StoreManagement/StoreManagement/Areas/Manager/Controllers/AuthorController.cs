@@ -10,12 +10,10 @@ namespace StoreManagement.Areas.Manager.Controllers
     [Authorize(Roles = "Manager")]
     public class AuthorController : Controller
     {
-        //private readonly AppDBContext _dbContext;
         private readonly IUnitOfWork _unitOfWork;
 
-        public AuthorController(/*AppDBContext dbContext, */IUnitOfWork unitOfWork)
+        public AuthorController(IUnitOfWork unitOfWork)
         {
-            //_dbContext = dbContext;
             _unitOfWork = unitOfWork;
         }
 

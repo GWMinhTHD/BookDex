@@ -9,9 +9,9 @@ namespace StoreManagement.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public string? Cover { get; set; }
+        public byte[]? Cover { get; set; }
         public string Description { get; set; }
-        public string? FileLocation { get; set; }
+        public byte[]? FileLocation { get; set; }
         public float Price { get; set; }
         [ValidateNever]
         public List<BookCategory> BookCategories { get; set; } = new List<BookCategory>();

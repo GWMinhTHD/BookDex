@@ -1,20 +1,17 @@
-﻿using StoreManagement.Interfaces;
-using StoreManagement.Models;
-using StoreManagement.Data;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+using StoreManagement.Interfaces;
+using StoreManagement.Models;
 
-namespace StoreManagement.Areas.Admin.Controllers
+namespace StoreManagement.Areas.Manager.Controllers
 {
-    [Area("Admin")]
-    //[Authorize(Roles = "Admin")]
+    [Area("Manager")]
+    [Authorize(Roles = "Manager")]
     public class CategoryController : Controller
     {
-        //private readonly AppDBContext _dbContext;
         private readonly IUnitOfWork _unitOfWork;
-        public CategoryController(IUnitOfWork unitOfWork /*, AppDBContext dbContext*/)
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            //_dbContext = dbContext;
             _unitOfWork = unitOfWork;
         }
 
@@ -30,8 +27,6 @@ namespace StoreManagement.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(Category category)
         {
-            //_dbContext.Category.Add(category);
-            //_dbContext.SaveChanges();
             _unitOfWork.Category.Insert(category);
             _unitOfWork.Save();
             return RedirectToAction("Index");
@@ -43,7 +38,6 @@ namespace StoreManagement.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            //Category category = _dbContext.Category.Find(id);
             Category category = _unitOfWork.Category.GetById(id);
             if (category == null)
             {
@@ -58,8 +52,6 @@ namespace StoreManagement.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                //_dbContext.Category.Update(category);
-                //_dbContext.SaveChanges();
                 _unitOfWork.Category.Update(category);
                 _unitOfWork.Save();
                 TempData["success"] = "Edited successfully";
@@ -75,7 +67,6 @@ namespace StoreManagement.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            //Category? category = _dbContext.Category.Find(id);
             Category? category = _unitOfWork.Category.GetById(id);
             if (category == null)
             {
@@ -87,9 +78,6 @@ namespace StoreManagement.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Delete(Category category)
         {
-
-            //_dbContext.Category.Remove(category);
-            //_dbContext.SaveChanges();
             _unitOfWork.Category.Delete(category);
             _unitOfWork.Save();
             TempData["success"] = "Category deleted succesfully";
