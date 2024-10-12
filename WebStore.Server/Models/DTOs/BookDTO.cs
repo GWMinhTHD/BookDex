@@ -11,6 +11,7 @@ namespace WebStore.Server.Models.DTOs
         public byte[]? FileLocation { get; set; }
         public string Description { get; set; }
         public float Price { get; set; }
+        public bool IsFeatured { get; set; }
         public List<int> CategoryIDs { get; set; } = new List<int>();
         public List<int> AuthorIDs{ get; set; } = new List<int>();
         public List<string> Categories { get; set; } = new List<string>();

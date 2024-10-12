@@ -1,0 +1,58 @@
+﻿@model List<StoreManagement.ViewModels.DashboardViewModel.SalesByMonthVM>
+
+@{
+    ViewData["Title"] = "Sales Dashboard";
+    var selectedYear = ViewBag.SelectedYear;
+    var availableYears = ViewBag.AvailableYears as List<int>;
+}
+
+<h2>Total Sales for @selectedYear</h2>
+
+<!-- Year Selection Form -->
+<form method="get" asp-controller="Dashboard" asp-action="Index">
+    <select name="year" onchange="this.form.submit()">
+        @foreach (var y in availableYears)
+        {
+            if (y == selectedYear)
+            {
+                <option value="@y" selected>@y</option>
+            }
+            else
+            {
+                <option value="@y">@y</option>
+            }
+        }
+    </select>
+</form>
+
+<!-- Chart Canvas -->
+<canvas id="salesChart" width="400" height="200"></canvas>
+
+<!-- Chart.js Script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var salesData = @Html.Raw(Json.Serialize(Model.Select(m => m.TotalSales)));
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    var ctx = document.getElementById('salesChart').getContext('2d');
+    var salesChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: months,
+            datasets: [{
+                label: 'Total Sales ($)',
+                data: salesData,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

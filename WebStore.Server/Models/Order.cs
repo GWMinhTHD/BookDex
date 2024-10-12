@@ -12,5 +12,6 @@ namespace WebStore.Server.Models
         public ApplicationUser User { get; set; }
         public double Total { get; set; }
         public List<OrderBook> OrderBooks { get; set; } = new List<OrderBook>();
+        public DateTime? DateCreated { get; set; }
     }
 }

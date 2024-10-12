@@ -57,6 +57,7 @@ namespace WebStore.Server.Controllers
                 Order order = new Order();
                 order.UserId = user.Id;
                 order.Total = 0;
+                order.DateCreated = DateTime.Now;
                 order.OrderBooks = new List<OrderBook>();
                 foreach (var cart in getCart)
                 {

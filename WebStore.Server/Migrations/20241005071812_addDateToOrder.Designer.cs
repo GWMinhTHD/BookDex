@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebStore.Server.Data;
 
@@ -11,9 +12,11 @@ using WebStore.Server.Data;
 namespace WebStore.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241005071812_addDateToOrder")]
+    partial class addDateToOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,19 +54,19 @@ namespace WebStore.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c549aeab-a3a2-4b12-a683-bdf7fcf015d4",
+                            Id = "e2663677-3b83-4fe9-ae85-df79d2cf9fbf",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "cb1fba8f-d8b9-4f35-9d7c-4cc74142f18e",
+                            Id = "b29fb99d-7fb8-4d6e-b221-10136597f9eb",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "8ed05f0b-02d2-4488-8fcd-e90492d56f20",
+                            Id = "d7511f53-c8d4-4522-b360-7b0f82cd12ca",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         });
@@ -282,9 +285,6 @@ namespace WebStore.Server.Migrations
 
                     b.Property<byte[]>("FileLocation")
                         .HasColumnType("varbinary(max)");
-
-                    b.Property<bool>("IsFeatured")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()

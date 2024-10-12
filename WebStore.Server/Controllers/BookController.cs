@@ -29,6 +29,7 @@ namespace WebStore.Server.Controllers
                 bookDTO.Cover = book.Cover;
                 bookDTO.Description = book.Description;
                 bookDTO.Price = book.Price;
+                bookDTO.IsFeatured = book.IsFeatured;
                 //bookDTO.FileLocation = book.FileLocation;
                 foreach (var category in book.BookCategories)
                 {

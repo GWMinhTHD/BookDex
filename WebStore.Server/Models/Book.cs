@@ -13,6 +13,7 @@ namespace WebStore.Server.Models
         public string Description { get; set; }
         public byte[]? FileLocation { get; set; }
         public float Price { get; set; }
+        public bool IsFeatured { get; set; }
         [ValidateNever]
         public List<BookCategory> BookCategories { get; set; } = new List<BookCategory>();
         [ValidateNever]

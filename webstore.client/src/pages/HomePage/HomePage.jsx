@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 import Select from "react-select";
 import "../../pages/HomePage/HomePage.css";
 import { useAuth } from "../../Context/useAuth";
+import Carousel from "../../components/Book/Carousel";
 
 
 
 function HomePage() {
-  const [books, setBooks] = useState({});
+  const [books, setBooks] = useState([]);
+  const [featuredBooks, setFeaturedBooks] = useState([]);
   const [categories, setCategories] = useState();
   const [authors, setAuthors] = useState();
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,6 +35,7 @@ function HomePage() {
           BookStoreApi.getAll("Author")
         ]);
       setBooks(booksResponse.data);
+      setFeaturedBooks(booksResponse.data.filter((book) => book.isFeatured));
       setCategories(
         genresResponse.data.map((genre) => ({ value: genre, label: genre }))
       );
@@ -76,6 +79,10 @@ function HomePage() {
   return (
     <div className="min-h-screen bg-gray-100 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-16">
+          {featuredBooks.length > 0 && <Carousel books={featuredBooks} />}
+        </div>
+
         <div className="mb-8 flex flex-wrap gap-4">
           <input
             type="text"
@@ -114,7 +121,7 @@ function HomePage() {
                 key={book.id}
                 className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col"
               >
-                <div className="h-80 p-4 ">
+                <div className="h-80 p-4 bg-gray-100">
                   {book.cover ? (
                     <img
                       src={`data:image/png;base64,${book.cover}`}

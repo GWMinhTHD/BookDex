@@ -164,6 +164,7 @@ namespace StoreManagement.Areas.Manager.Controllers
                 currentBook.Name = bookCUvm.Book.Name;
                 currentBook.Description = bookCUvm.Book.Description;
                 currentBook.Price = bookCUvm.Book.Price;
+                currentBook.IsFeatured = bookCUvm.Book.IsFeatured;
 
                 if (image != null)
                 {
