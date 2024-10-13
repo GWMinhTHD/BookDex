@@ -3,54 +3,67 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 import { useAuth } from "../Context/useAuth";
 import Button from "react-bootstrap/Button";
 
 function NavigationBar() {
   const { isLoggedIn, user, logout } = useAuth();
+
   return (
-    <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
+    <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand as={Link} to="/">
-          The BookDex
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          {isLoggedIn() ? (
-            <React.Fragment>
-              <Nav className="me-auto">
-                <Nav.Link as={Link} to="/cart">
-                  Cart
-                </Nav.Link>
-                <Nav.Link as={Link} to="/library">
-                  Library
-                </Nav.Link>
-                <Nav.Link as={Link} to="/order">
-                  Order
-                </Nav.Link>
-              </Nav>
-              <Nav>
-                <Navbar.Text className="ml-auto">
-                  Welcome, {user?.name} {"  "}
-                </Navbar.Text>
-                <Button variant="danger" onClick={logout} className="ml-auto">
+        <LinkContainer to="/">
+          <Navbar.Brand>BookDex</Navbar.Brand>
+        </LinkContainer>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <LinkContainer to="/">
+              <Nav.Link>Home</Nav.Link>
+            </LinkContainer>
+            {isLoggedIn() ? (
+              <>
+                <LinkContainer to="/cart">
+                  <Nav.Link>Cart</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/library">
+                  <Nav.Link>Library</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/order">
+                  <Nav.Link>Orders</Nav.Link>
+                </LinkContainer>
+              </>
+            ) : (
+              <></>
+            )}
+          </Nav>
+          <Nav>
+            {isLoggedIn() ? (
+              <>
+                <LinkContainer to="/">
+                  <Nav.Link>{user?.name}</Nav.Link>
+                </LinkContainer>
+                <Button
+                  variant="danger"
+                  size="sm"
+                  className="pb-1.5 mt-1"
+                  onClick={logout}
+                >
                   Logout
                 </Button>
-              </Nav>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              <Nav className="me-auto"></Nav>
-              <Nav>
-                <Nav.Link as={Link} to="/login" className="ml-auto">
-                  Login
-                </Nav.Link>
-                <Nav.Link as={Link} to="/register" className="ml-auto">
-                  Signup
-                </Nav.Link>
-              </Nav>
-            </React.Fragment>
-          )}
+              </>
+            ) : (
+              <>
+                <LinkContainer to="/login">
+                  <Nav.Link>Login</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/register">
+                  <Nav.Link>Register</Nav.Link>
+                </LinkContainer>
+              </>
+            )}
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>

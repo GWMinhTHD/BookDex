@@ -54,29 +54,29 @@ const Carousel = ({ books }) => {
                     />
                   )}
                   <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center p-4 sm:p-6">
-                    <div className="flex w-full max-w-5xl mx-auto">
+                    <div className="flex flex-col sm:flex-row w-full max-w-5xl mx-auto">
                       {book.cover ? (
                         <img
                           src={`data:image/png;base64,${book.cover}`}
                           alt={book.name}
-                          className="w-1/3 h-full object-contain bg-white rounded-md shadow-md mr-6"
+                          className="w-48 h-72 sm:w-1/3 sm:h-full mr-auto ml-auto object-contain bg-white rounded-md shadow-md sm:mr-6 sm:ml-0"
                         />
                       ) : (
                         <img
                           src={`https://localhost:7216/img/bookcover/placeholder.jpg`}
                           alt={book.name}
-                          className="w-1/3 h-full object-contain bg-white rounded-md shadow-md mr-6"
+                          className="w-48 h-72 sm:w-1/3 sm:h-full object-contain bg-white rounded-md shadow-md mr-6"
                         />
                       )}
-                      <div className="w-2/3 flex flex-col justify-between">
+                      <div className="w-full sm:w-2/3 flex flex-col justify-between">
                         <div>
-                          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+                          <h2 className="text-xl sm:text-3xl font-bold text-white mb-0 sm:mb-2">
                             {book.name}
                           </h2>
-                          <p className="text-lg sm:text-xl text-gray-300 mb-2">
+                          <p className="text-sm sm:text-xl text-gray-300 sm:mb-2">
                             {book.authors.join(", ")}
                           </p>
-                          <div className="flex flex-wrap gap-2 mb-4">
+                          <div className="flex flex-wrap gap-2 sm:mb-4">
                             {book.categories.map((category, idx) => (
                               <span
                                 key={idx}
@@ -86,7 +86,7 @@ const Carousel = ({ books }) => {
                               </span>
                             ))}
                           </div>
-                          <p className="text-white text-sm sm:text-base mb-4 line-clamp-3 sm:line-clamp-4">
+                          <p className="hidden sm:block text-white text-sm sm:text-base mb-4 line-clamp-3 sm:line-clamp-4">
                             {book.description}
                           </p>
                         </div>
