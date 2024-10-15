@@ -59,7 +59,7 @@ const Carousel = ({ books }) => {
                         <img
                           src={`data:image/png;base64,${book.cover}`}
                           alt={book.name}
-                          className="w-48 h-72 sm:w-1/3 sm:h-full mr-auto ml-auto object-contain bg-white rounded-md shadow-md sm:mr-6 sm:ml-0"
+                          className="w-48 h-72 sm:w-1/3 sm:h-full mr-auto ml-auto object-contain sm:mr-6 sm:ml-0"
                         />
                       ) : (
                         <img

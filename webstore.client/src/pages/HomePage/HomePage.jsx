@@ -37,11 +37,12 @@ function HomePage() {
       setBooks(booksResponse.data);
       setFeaturedBooks(booksResponse.data.filter((book) => book.isFeatured));
       setCategories(
-        genresResponse.data.map((genre) => ({ value: genre, label: genre }))
+        genresResponse.data.map((category) => ({ value: category.id, label: category.name }))
       );
       setAuthors(
-        authorsResponse.data.map((author) => ({ value: author, label: author }))
+        authorsResponse.data.map((author) => ({ value: author.id, label: author.name }))
       );
+      console.log(categories)
     } catch (error) {
       console.error("Error fetching data:", error);
     }
