@@ -10,7 +10,6 @@
 
 <h1>Create Book</h1>
 <form method="post" enctype="multipart/form-data">
-    <input asp-for="Book.Id" hidden />
     <div class="form-group">
         <label asp-for="Book.Name">Title</label>
         <input asp-for="Book.Name" />
@@ -43,7 +42,6 @@
     <input type="file" name="image" class="form-control">
     <label asp-for="Book.FileLocation"></label>
     <input type="file" name="pdf" class="form-control">
-    </div>
     <div class="btn group" role="group">
         <button type="submit" class="btn btn-primary">Create</button>
 

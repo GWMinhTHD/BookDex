@@ -16,6 +16,7 @@ import PaymentPage from "../pages/PaymentPage/PaymentPage";
 import ReaderPage from "../pages/ReaderPage/ReaderPage";
 import OrderPage from "../pages/OrderPage/OrderPage";
 import OrderDetails from "../pages/OrderDetails/OrderDetails";
+import ProfilePage from "../pages/ProfilePage/ProfilePage";
 
 function Body() {
   return (
@@ -36,6 +37,7 @@ function Body() {
           <Route path="/reader/:id" element={<ReaderPage />} />
           <Route path="/order" element={<OrderPage />} />
           <Route path="/order/:id" element={<OrderDetails />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

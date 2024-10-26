@@ -64,8 +64,9 @@ namespace StoreManagement.Areas.Manager.Controllers
 
             return View(bookCUvm);
         }
+        [RequestFormLimits(ValueLengthLimit = int.MaxValue, MultipartBodyLengthLimit = int.MaxValue)]
         [HttpPost]
-        public IActionResult Create(CreateUpdateVM bookCUvm, IFormFile? image, IFormFile? pdf)
+        public IActionResult Create(CreateUpdateVM bookCUvm, IFormFile image, IFormFile? pdf)
         {
             if (ModelState.IsValid)
             {

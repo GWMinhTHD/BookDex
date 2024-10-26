@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 
 function LibraryPage() {
-  const [books, setBooks] = useState({});
+  const [books, setBooks] = useState([]);
   const [categories, setCategories] = useState([]);
   const [authors, setAuthors] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,21 +15,23 @@ function LibraryPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
+
+
   const fetchData = async () => {
     setIsLoading(true);
     try {
       const [booksResponse, genresResponse, authorsResponse] =
         await Promise.all([
-          BookStoreApi.getAll("Book"),
+          BookStoreApi.getUserLib(),
           BookStoreApi.getAll("Category"),
           BookStoreApi.getAll("Author"),
         ]);
       setBooks(booksResponse.data);
       setCategories(
-        genresResponse.data.map((genre) => ({ value: genre, label: genre }))
+        genresResponse.data.map((category) => ({ value: category.id, label: category.name }))
       );
       setAuthors(
-        authorsResponse.data.map((author) => ({ value: author, label: author }))
+        authorsResponse.data.map((author) => ({ value: author.id, label: author.name }))
       );
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -101,7 +103,7 @@ function LibraryPage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {currentBooks.map((book) => (
+          {currentBooks.length > 0 && currentBooks.map((book) => (
             <div
               key={book.id}
               className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col"

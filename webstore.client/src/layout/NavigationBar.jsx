@@ -41,7 +41,7 @@ function NavigationBar() {
           <Nav>
             {isLoggedIn() ? (
               <>
-                <LinkContainer to="/">
+                <LinkContainer to="/profile">
                   <Nav.Link>{user?.name}</Nav.Link>
                 </LinkContainer>
                 <Button

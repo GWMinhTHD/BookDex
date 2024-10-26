@@ -40,6 +40,44 @@ const register = async (email, username, password) => {
   }
 };
 
+const updateName = async (name, password) => {
+  const token = localStorage.getItem("token");
+  try {
+    const data = axiosClient.post(
+      `api/profile/update-name`,
+      {
+        name: name,
+        password: password
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    return data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+const changePassword = async (oldPass, newPass) => {
+  const token = localStorage.getItem("token");
+  try {
+    const data = axiosClient.post(
+      `api/profile/change-password`,
+      {
+        oldPassword: oldPass,
+        newPassword: newPass
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    return data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
 const addCart = async (id) => {
   const token = localStorage.getItem("token");
   try {
@@ -124,7 +162,9 @@ const BookStoreApi = {
   getUserBook,
   updatePage,
   getUserOrder,
-  getOrderDetail
+  getOrderDetail,
+  updateName,
+  changePassword
 };
 
 export default BookStoreApi;

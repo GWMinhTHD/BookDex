@@ -61,6 +61,40 @@ export const UserProvider = ({ children }) => {
       .catch((e) => toast.warning("Server error occured"));
   };
 
+  const updateName = async (name, password) => {
+    await BookStoreApi.updateName(name, password).then((res) => {
+      if (res) {
+        localStorage.setItem("token", res?.data.token);
+        const userObj = {
+          name: res.data.name,
+          email: res.data.email,
+        };
+        localStorage.setItem("user", JSON.stringify(userObj));
+        setToken(res.data.token);
+        setUser(userObj);
+        toast.success("Profile Updated");
+        navigate("/");
+      }
+    });
+  }
+
+  const changePassword = async (oldPassword, newPassword) => {
+    await BookStoreApi.changePassword(oldPassword, newPassword).then((res) => {
+      if (res) {
+        localStorage.setItem("token", res?.data.token);
+        const userObj = {
+          name: res.data.name,
+          email: res.data.email,
+        };
+        localStorage.setItem("user", JSON.stringify(userObj));
+        setToken(res.data.token);
+        setUser(userObj);
+        toast.success("Password Changed");
+        navigate("/");
+      }
+    });
+  }
+
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -83,7 +117,7 @@ export const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ loginUser, user, token, logout, isLoggedIn, registerUser, addCart }}
+      value={{ loginUser, user, token, logout, isLoggedIn, registerUser, addCart, updateName, changePassword }}
     >
       {isReady ? children : null}
     </UserContext.Provider>

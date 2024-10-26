@@ -16,8 +16,6 @@ function PaymentPage() {
     mode: 'payment',
     amount: state.amount*100,
     currency: 'usd',
-    // Fully customizable with appearance API.
-    appearance: {/*...*/},
   };
 
   return (
