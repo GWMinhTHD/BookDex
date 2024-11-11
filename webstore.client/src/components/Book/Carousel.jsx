@@ -26,9 +26,9 @@ const Carousel = ({ books }) => {
   }, []);
 
   return (
-    <div className="w-full max-w-6xl mx-auto">
-      <div className="relative overflow-hidden rounded-lg shadow-lg">
-        <div className="relative h-[400px] sm:h-[500px]">
+    <div className="w-full mx-auto">
+      <div className="relative overflow-hidden shadow-lg">
+        <div className="relative h-[400px] sm:h-[350px]">
           {books.map((book, index) => (
             <div
               key={book.id}
@@ -54,12 +54,12 @@ const Carousel = ({ books }) => {
                     />
                   )}
                   <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center p-4 sm:p-6">
-                    <div className="flex flex-col sm:flex-row w-full max-w-5xl mx-auto">
+                    <div className="flex flex-col sm:flex-row w-full max-w-5xl h-full mx-2.5">
                       {book.cover ? (
                         <img
                           src={`data:image/png;base64,${book.cover}`}
                           alt={book.name}
-                          className="w-48 h-72 sm:w-1/3 sm:h-full mr-auto ml-auto object-contain sm:mr-6 sm:ml-0"
+                          className="w-48 h-64 max-h-64 sm:w-1/3 sm:h-full sm:max-h-full mr-auto ml-auto object-contain sm:mr-6 sm:ml-0"
                         />
                       ) : (
                         <img
@@ -68,7 +68,7 @@ const Carousel = ({ books }) => {
                           className="w-48 h-72 sm:w-1/3 sm:h-full object-contain bg-white rounded-md shadow-md mr-6"
                         />
                       )}
-                      <div className="w-full sm:w-2/3 flex flex-col justify-between">
+                      <div className="w-full h-full sm:w-2/3 flex flex-col justify-between">
                         <div>
                           <h2 className="text-xl sm:text-3xl font-bold text-white mb-0 sm:mb-2">
                             {book.name}
@@ -90,13 +90,13 @@ const Carousel = ({ books }) => {
                             {book.description}
                           </p>
                         </div>
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between ml-0 sm:justify-start">
                           <p className="text-xl sm:text-2xl font-bold text-white">
                             ${book.price.toFixed(2)}
                           </p>
                           <button
                             onClick={() => handleAddToCart(book.id)}
-                            className="px-4 py-2 bg-blue-600 text-white text-sm sm:text-base font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out"
+                            className="px-4 py-2 ml-0 sm:ml-2 bg-blue-600 text-white text-sm sm:text-base font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out"
                           >
                             Add to Cart
                           </button>
@@ -110,7 +110,7 @@ const Carousel = ({ books }) => {
           ))}
         </div>
       </div>
-      <div className="flex justify-between mt-4">
+      <div className="flex justify-between mt-2 px-2">
         <button
           onClick={prevSlide}
           className="bg-gray-800 text-white rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition duration-300 ease-in-out"

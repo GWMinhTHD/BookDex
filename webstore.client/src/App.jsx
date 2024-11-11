@@ -3,7 +3,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import { UserProvider } from "./Context/useAuth";
-import { Outlet } from "react-router";
 import Body from "./layout/Body";
 import NavigationBar from "./layout/NavigationBar";
 
