@@ -60,22 +60,22 @@ function LibraryPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center text-gray-100">
         Loading...
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8">
+    <div className="min-h-screen bg-gray-900 py-8 text-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">My Library</h1>
+        <h1 className="text-3xl font-bold mb-8">My Library</h1>
 
         <div className="mb-8 flex flex-wrap gap-4">
           <input
             type="text"
             placeholder="Search by title"
-            className="p-2 border rounded w-full sm:w-64"
+            className="p-2 border rounded w-full sm:w-64 bg-gray-800 border-gray-700 text-gray-100 placeholder-gray-400"
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <div className="w-full sm:w-64">
@@ -87,6 +87,38 @@ function LibraryPage() {
               classNamePrefix="select"
               placeholder="Filter by Genres"
               onChange={setSelectedGenres}
+              styles={{
+                control: (base) => ({
+                  ...base,
+                  backgroundColor: "#1f2937",
+                  borderColor: "#374151",
+                }),
+                menu: (base) => ({
+                  ...base,
+                  backgroundColor: "#1f2937",
+                }),
+                option: (base, state) => ({
+                  ...base,
+                  backgroundColor: state.isFocused ? "#374151" : "#1f2937",
+                  color: "#f3f4f6",
+                }),
+                multiValue: (base) => ({
+                  ...base,
+                  backgroundColor: "#374151",
+                }),
+                multiValueLabel: (base) => ({
+                  ...base,
+                  color: "#f3f4f6",
+                }),
+                multiValueRemove: (base) => ({
+                  ...base,
+                  color: "#f3f4f6",
+                  ":hover": {
+                    backgroundColor: "#4b5563",
+                    color: "#f3f4f6",
+                  },
+                }),
+              }}
             />
           </div>
           <div className="w-full sm:w-64">
@@ -98,17 +130,49 @@ function LibraryPage() {
               classNamePrefix="select"
               placeholder="Filter by Authors"
               onChange={setSelectedAuthors}
+              styles={{
+                control: (base) => ({
+                  ...base,
+                  backgroundColor: "#1f2937",
+                  borderColor: "#374151",
+                }),
+                menu: (base) => ({
+                  ...base,
+                  backgroundColor: "#1f2937",
+                }),
+                option: (base, state) => ({
+                  ...base,
+                  backgroundColor: state.isFocused ? "#374151" : "#1f2937",
+                  color: "#f3f4f6",
+                }),
+                multiValue: (base) => ({
+                  ...base,
+                  backgroundColor: "#374151",
+                }),
+                multiValueLabel: (base) => ({
+                  ...base,
+                  color: "#f3f4f6",
+                }),
+                multiValueRemove: (base) => ({
+                  ...base,
+                  color: "#f3f4f6",
+                  ":hover": {
+                    backgroundColor: "#4b5563",
+                    color: "#f3f4f6",
+                  },
+                }),
+              }}
             />
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {currentBooks.length > 0 && currentBooks.map((book) => (
+          {currentBooks.map((book) => (
             <div
               key={book.id}
-              className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col"
+              className="bg-gray-800 rounded-lg shadow-md overflow-hidden flex flex-col"
             >
-              <div className="h-80 p-4 bg-gray-100">
+              <div className="h-80 p-4 bg-gray-700">
                 {book.cover ? (
                   <img
                     src={`data:image/png;base64,${book.cover}`}
@@ -125,11 +189,9 @@ function LibraryPage() {
               </div>
               <div className="p-4 flex-grow flex flex-col justify-between">
                 <div>
-                  <h2 className="text-xl font-semibold text-gray-800 mb-2">
-                    {book.name}
-                  </h2>
-                  <p className="text-sm text-gray-600 mb-2">{book.author}</p>
-                  <p className="text-xs text-gray-500 mb-2">
+                  <h2 className="text-xl font-semibold mb-2">{book.name}</h2>
+                  <p className="text-sm text-gray-300 mb-2">{book.author}</p>
+                  <p className="text-xs text-gray-400 mb-2">
                     {book.categories.join(", ")}
                   </p>
                 </div>
@@ -142,7 +204,7 @@ function LibraryPage() {
                   </Link>
                   <Link
                     to={`/book/${book.id}`}
-                    className="w-full px-4 py-2 bg-gray-200 text-gray-800 text-sm font-semibold rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition duration-300 ease-in-out text-center"
+                    className="w-full px-4 py-2 bg-gray-700 text-gray-200 text-sm font-semibold rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition duration-300 ease-in-out text-center"
                   >
                     More Details
                   </Link>
@@ -161,8 +223,8 @@ function LibraryPage() {
                 onClick={() => paginate(i + 1)}
                 className={`mx-1 px-4 py-2 border ${
                   currentPage === i + 1
-                    ? "bg-blue-500 text-white"
-                    : "bg-white text-blue-500"
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-800 text-gray-200 hover:bg-gray-700"
                 } rounded`}
               >
                 {i + 1}

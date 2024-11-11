@@ -7,7 +7,9 @@ const Carousel = ({ books }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { addCart } = useAuth();
 
-  const handleAddToCart = (id) => {
+  const handleAddToCart = (e, id) => {
+    e.preventDefault();
+    e.stopPropagation();
     addCart(id);
   };
   const nextSlide = () => {
@@ -53,7 +55,7 @@ const Carousel = ({ books }) => {
                       className="w-full h-full object-cover"
                     />
                   )}
-                  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center p-4 sm:p-6">
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-gray-900 flex items-center p-4 sm:p-6">
                     <div className="flex flex-col sm:flex-row w-full max-w-5xl h-full mx-2.5">
                       {book.cover ? (
                         <img
@@ -95,7 +97,7 @@ const Carousel = ({ books }) => {
                             ${book.price.toFixed(2)}
                           </p>
                           <button
-                            onClick={() => handleAddToCart(book.id)}
+                            onClick={(e) => handleAddToCart(e, book.id)}
                             className="px-4 py-2 ml-0 sm:ml-2 bg-blue-600 text-white text-sm sm:text-base font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out"
                           >
                             Add to Cart

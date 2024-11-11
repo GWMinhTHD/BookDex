@@ -57,23 +57,23 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+   <div className="mx-auto p-4 bg-gray-900 min-h-screen">
       <div className="max-w-2xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">
+        <h1 className="text-3xl font-bold text-gray-100 mb-6">
           Profile Settings
         </h1>
 
         {/* Username Update Form */}
-        <div className="bg-white shadow-md rounded-lg overflow-hidden mb-6">
+        <div className="bg-gray-800 shadow-md rounded-lg overflow-hidden mb-6">
           <div className="px-6 py-4">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">
+            <h2 className="text-xl font-bold text-gray-100 mb-4">
               Update Username
             </h2>
             <form onSubmit={handleNameSubmit} className="space-y-4">
               <div>
                 <label
                   htmlFor="username"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-300 mb-1"
                 >
                   Username
                 </label>
@@ -83,13 +83,13 @@ const ProfilePage = () => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 bg-gray-700 text-gray-100 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
               <div>
                 <label
                   htmlFor="usernamePassword"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-300 mb-1"
                 >
                   Password
                 </label>
@@ -99,12 +99,12 @@ const ProfilePage = () => {
                   value={userPassword}
                   onChange={(e) => setUserPassword(e.target.value)}
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 bg-gray-700 text-gray-100 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
               {nameError && (
                 <div
-                  className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4"
+                  className="bg-red-900 border-l-4 border-red-500 text-red-100 p-4"
                   role="alert"
                 >
                   <p className="font-bold">Error</p>
@@ -122,16 +122,16 @@ const ProfilePage = () => {
         </div>
 
         {/* Password Change Form */}
-        <div className="bg-white shadow-md rounded-lg overflow-hidden">
+        <div className="bg-gray-800 shadow-md rounded-lg overflow-hidden">
           <div className="px-6 py-4">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">
+            <h2 className="text-xl font-bold text-gray-100 mb-4">
               Change Password
             </h2>
             <form onSubmit={handlePasswordSubmit} className="space-y-4">
               <div>
                 <label
                   htmlFor="oldPassword"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-300 mb-1"
                 >
                   Old Password
                 </label>
@@ -141,13 +141,13 @@ const ProfilePage = () => {
                   value={oldPassword}
                   onChange={(e) => setOldPassword(e.target.value)}
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 bg-gray-700 text-gray-100 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
               <div>
                 <label
                   htmlFor="newPassword"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-300 mb-1"
                 >
                   New Password
                 </label>
@@ -157,12 +157,12 @@ const ProfilePage = () => {
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 bg-gray-700 text-gray-100 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
               {passwordError && (
                 <div
-                  className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4"
+                  className="bg-red-900 border-l-4 border-red-500 text-red-100 p-4"
                   role="alert"
                 >
                   <p className="font-bold">Error</p>
