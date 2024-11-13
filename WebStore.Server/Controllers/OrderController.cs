@@ -33,6 +33,7 @@ namespace WebStore.Server.Controllers
             {
                 var orderDTO = new OrderDTO();
                 orderDTO.Id = order.Id;
+                orderDTO.Date = order.DateCreated.Date.ToShortDateString();
                 orderDTO.Total = order.Total;
                 userOrder.Add(orderDTO);
             }
@@ -60,7 +61,9 @@ namespace WebStore.Server.Controllers
             var getItems = await _unitOfWork.Order.GetById(id);
             foreach (var item in getItems)
             {
+                Book book = await _unitOfWork.Book.GetById(item.BookId);
                 var itemDTO = new OrderItemDTO();
+                itemDTO.Cover = book.Cover;
                 itemDTO.BookName = item.BookName;
                 itemDTO.BookPrice = item.BookPrice;
                 dto.Total = dto.Total + item.BookPrice;

@@ -5,6 +5,7 @@ import { toolbarPlugin, ToolbarSlot, TransformToolbarSlot } from '@react-pdf-vie
 import '@react-pdf-viewer/core/lib/styles/index.css'
 import '@react-pdf-viewer/toolbar/lib/styles/index.css'
 import { useParams } from "react-router-dom";
+import "../../pages/ReaderPage/reader.css";
 
 
 function ReaderPage() {
@@ -66,15 +67,15 @@ const transform = (slot) => ({
   return (
     <>
       {book ? (
-        <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4 sm:p-6 md:p-8">
-          <div className="w-full max-w-6xl h-[85vh] sm:h-[90vh] bg-white shadow-lg rounded-lg overflow-hidden">
+        <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4 sm:p-6 md:p-8">
+          <div className="w-full max-w-6xl h-[85vh] sm:h-[90vh] bg-gray-800 shadow-lg rounded-lg overflow-hidden">
             <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
               <div className="h-full">
                 <div
                   style={{
                     alignItems: "center",
-                    backgroundColor: "#eeeeee",
-                    borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
+                    backgroundColor: "#1f2937",
+                    borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
                     display: "flex",
                     padding: "4px",
                   }}
@@ -87,9 +88,10 @@ const transform = (slot) => ({
                   onPageChange={handlePageChange}
                   plugins={[toolbarPluginInstance]}
                   defaultScale={1.0}
+                  theme="dark"
                   renderLoader={(percentages) => (
-                    <div className="flex items-center justify-center h-full">
-                      <p className="text-gray-500">
+                    <div className="flex items-center justify-center h-full bg-gray-800 text-gray-200">
+                      <p>
                         Loading... {Math.round(percentages)}%
                       </p>
                     </div>

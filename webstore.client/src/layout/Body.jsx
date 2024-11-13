@@ -8,7 +8,6 @@ import LibraryPage from "../pages/LibraryPage/LibraryPage";
 import ProtectedRoute from "../Routes/ProtectedRoute";
 import BookDetails from "../pages/BookDetails/BookDetails";
 import CartPage from "../pages/CartPage/CartPage";
-import PaymentPage from "../pages/PaymentPage/PaymentPage";
 import ReaderPage from "../pages/ReaderPage/ReaderPage";
 import OrderPage from "../pages/OrderPage/OrderPage";
 import OrderDetails from "../pages/OrderDetails/OrderDetails";
@@ -23,7 +22,6 @@ function Body() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route element={<ProtectedRoute />}>
-          <Route path="/payment" element={<PaymentPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/library" element={<LibraryPage />} />
           <Route path="/reader/:id" element={<ReaderPage />} />

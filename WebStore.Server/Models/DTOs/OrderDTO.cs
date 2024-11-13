@@ -5,6 +5,7 @@ namespace WebStore.Server.Models.DTOs
     public class OrderDTO
     {
         public int Id { get; set; }
+        public string Date { get; set; }
         public double Total { get; set; }
     }
 }
