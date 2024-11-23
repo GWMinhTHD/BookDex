@@ -15,7 +15,7 @@
             <tr>
                 <th>Alias</th>
                 <th>Info</th>
-                <th>Actions</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -25,7 +25,7 @@
                     <td>@author.Alias</td>
                     <td>@author.Info</td>
                     <td>
-                        <a asp-controller="Author" asp-action="CreateUpdate" asp-route-id="@author.Id" class="btn btn-secondary btn-sm">Edit</a>
+                        <a asp-controller="Author" asp-action="CreateUpdate" asp-route-id="@author.Id" class="btn btn-warning btn-sm">Edit</a>
                         <a asp-controller="Author" asp-action="Delete" asp-route-id="@author.Id" class="btn btn-danger btn-sm">Delete</a>
                     </td>
                 </tr>
