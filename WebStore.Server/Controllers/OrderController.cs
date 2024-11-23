@@ -63,7 +63,7 @@ namespace WebStore.Server.Controllers
             {
                 Book book = await _unitOfWork.Book.GetById(item.BookId);
                 var itemDTO = new OrderItemDTO();
-                itemDTO.Cover = book.Cover;
+                if (book != null) { itemDTO.Cover = book.Cover; }
                 itemDTO.BookName = item.BookName;
                 itemDTO.BookPrice = item.BookPrice;
                 dto.Total = dto.Total + item.BookPrice;
