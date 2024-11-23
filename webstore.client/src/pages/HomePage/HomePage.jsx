@@ -13,7 +13,7 @@ function HomePage() {
   const [categories, setCategories] = useState();
   const [authors, setAuthors] = useState();
   const [currentPage, setCurrentPage] = useState(1);
-  const [booksPerPage] = useState(8);
+  const [booksPerPage] = useState(9);
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedAuthors, setSelectedAuthors] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
