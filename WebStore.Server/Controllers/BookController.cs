@@ -47,7 +47,7 @@ namespace WebStore.Server.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Book>> GetById(int? id)
+        public async Task<ActionResult<BookDTO>> GetById(int? id)
         {
             if (id == 0 || id == null)
             {
