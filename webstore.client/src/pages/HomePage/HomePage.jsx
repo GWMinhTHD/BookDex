@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import BookStoreApi from "../../api/BookStoreApi";
 import { Link } from "react-router-dom";
 import Select from "react-select";
-import "../../pages/HomePage/HomePage.css";
 import { useAuth } from "../../Context/useAuth";
 import Carousel from "../../components/Book/Carousel";
 import { ShoppingCart } from "lucide-react";
