@@ -11,6 +11,7 @@
         <tr>
             <th>OrderId</th>
             <th>Total</th>
+            <th>Date created</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -20,6 +21,7 @@
             <tr>
                 <td>@order.Id</td>
                 <td>@order.Total</td>
+                <td>@order.DateCreated</td>
                 <td>
                     <a asp-controller="Order" asp-action="Detail" asp-area="Manager" asp-route-id="@order.Id" class="btn btn-info">Details</a>        
                 </td>

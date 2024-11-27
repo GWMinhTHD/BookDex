@@ -1,18 +1,18 @@
 ﻿@model Author
 <!-- <partial name="_Notification"/> -->
 
-<h1>Edit Cat</h1>
-<form  method="post">
+<h1>Delete author</h1>
+<form method="post">
     <input asp-for="Id" hidden />
-  </div>
+  
   <div class="form-group">
-    <label asp-for="Alias">Alias</label>
-    <input asp-for="Alias" disabled/>
+    <label asp-for="Alias" class="control-label">Alias</label>
+    <input asp-for="Alias" class="form-control" disabled />
     <span asp-validation-for="Alias" class="text-danger"></span>
   </div>
   <div class="form-group">
-    <label asp-for="Info">Information</label>
-    <input asp-for="Info" disabled/>
+    <label asp-for="Info" class="control-label">Information</label>
+    <input asp-for="Info" class="form-control" disabled />
     <span asp-validation-for="Info" class="text-danger"></span>
   </div>
   <button type="submit" class="btn btn-primary">Delete</button>

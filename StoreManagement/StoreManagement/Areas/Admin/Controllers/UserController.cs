@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace StoreManagement.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
